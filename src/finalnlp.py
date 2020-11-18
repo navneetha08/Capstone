@@ -128,7 +128,7 @@ def parameterize(question):
   question.clear()
   question.update(func_info)
 
-def process_question(question , text , sen, sentences, flags, letters, op , ques_expression_list , list_question):
+def process_question(question , text , sen, sentences, flags, letters, op , ques_expression_list , list_question , nlp_question , nlp_list_question):
   ques = ""
   expression = ""
   words = text.split()
@@ -146,6 +146,11 @@ def process_question(question , text , sen, sentences, flags, letters, op , ques
   
   text = " ".join(words)
   
+  if(check):
+    nlp_question.append(text)
+  else:
+    nlp_list_question.append(text)
+
   for term in word_tokenize(text):
     if(term not in op and term != "?"):
       ques += term + ' ' 
@@ -171,7 +176,7 @@ def process_question(question , text , sen, sentences, flags, letters, op , ques
         if(check):
           ques_expression_list.append(expression.strip())
         else:
-          list_question.append(letter)
+          list_question.append(expression.strip())
         expression = ""
         #print()
       else:
@@ -184,7 +189,7 @@ def process_question(question , text , sen, sentences, flags, letters, op , ques
 
       ques = ""
 
-def process_query(q, op, letters, info = dict(), question = dict(), expression_list = list() , ques_expression_list = list() , nlp_question = list() , list_question = list()):  
+def process_query(q, op, letters, info = dict(), question = dict(), expression_list = list() , ques_expression_list = list() , nlp_question = list() , list_question = list() , nlp_list_question = list()):  
   flags = {'NP' : 0 , 'VP' : 0 , 'PP' : 0}
   sentences = []
   sen = 0
@@ -198,8 +203,8 @@ def process_query(q, op, letters, info = dict(), question = dict(), expression_l
     sentences.append(statement)
     if("?" in statement):
       # print("inside if ?", question)
-      nlp_question.append(statement)
-      process_question(question, statement, sen, sentences, flags, letters, op , ques_expression_list , list_question)
+      
+      process_question(question, statement, sen, sentences, flags, letters, op , ques_expression_list , list_question ,  nlp_question , nlp_list_question)
       # print("in process_query", question)
     else:
       text = "" 
@@ -312,27 +317,31 @@ def user_input(query):
   info = dict()
   question = dict()
   nlp_question = [] #questions in text
+  nlp_list_question = []
   list_question = [] #list kind of questions
   expression_list = list()
   ques_expression_list = list()
-  process_query(query, op, letters, info, question , expression_list , ques_expression_list , nlp_question , list_question)
+  process_query(query, op, letters, info, question , expression_list , ques_expression_list , nlp_question , list_question , nlp_list_question)
   parameterize(question)
   parameterize(info)
   map_var(info, info , expression_list)
   map_var(question, info , ques_expression_list)
-  return [expression_list, ques_expression_list , info, question , nlp_question , list_question]
+  return [expression_list, ques_expression_list , info, question , nlp_question , list_question , nlp_list_question]
 
 def NLP_main(query):
-  allFacts, questions, predFacts, predQuest , nlp_question , list_question = user_input(query)
+  allFacts, questions, predFacts, predQuest , nlp_question , list_question , nlp_list_question = user_input(query)
   conditionals , facts = split_facts(allFacts)
   print("Boolean Expressions:")
   print("Facts: " , allFacts)
   print("Questions : " , questions)
+  print("List Questions : " , list_question)
   print("Predicate Representation :")
   print("Facts: " , predFacts)
   print("Question: ", predQuest)
-  return (conditionals, facts, questions, predFacts, predQuest , nlp_question , list_question)
+  return (conditionals, facts, questions, predFacts, predQuest , nlp_question , list_question , nlp_list_question)
 
+# query = "Mary ate bread and jam. What did mary eat?"
+# NLP_main(query)
 
 #a = NLP_main("Mary went to school and John did not. If Mary and john went to school then ram did not. Did mary and ram go to school? Did john not go to school?")
 # query = "Mary went to school and John did not. If Mary and john went to school then ram did not. Did mary and ram go to school? Did john not go to school?"

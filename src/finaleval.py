@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1VXM7HwVvSVw-shXj5DkFNtofDdaWPNvQ
 """
 
+
 # This is the final evaluation notebook. 
 # DONE:
 # (1) Tree construction for conditionals
@@ -154,11 +155,9 @@ def outer_dfs(var, vardict, truth , quesVars,  node=None):
     
     if isOperator(var):
       dfs(node, vardict , quesVars)
-    
     else:
       vardict[var][0] = truth
       nodelist = vardict[var][1]
-      #print("hello")
       for node in nodelist:      
         node.truth = truth 
         if(node.visited == False):
@@ -169,16 +168,13 @@ def dfs(node, vardict , quesVars):
   
   is_op = isOperator(node.value)
   
-  if(node.visited == False ): # IT SHOULDNT BE VISITED AGAIN
-    
+  if(node.visited == False ):     
     node.visited = True
-
     if(not(is_op)): #operand
       if (node.parent and canSetNode(node.parent)):
         dfs(node.parent, vardict , quesVars)
       else:
         return
-    
     else: # operator
       trySettingChildren(node) # conditions for operators
       if node.left.truth is not None:
@@ -338,7 +334,66 @@ def my_eval(val1, val2, op):
 
     return res
     
+# ---------------------------- LISTING TYPE QUESTIONS ------------------------------------------------
+def splitParams(x):
+    """ returns tuple of name and params
+        input: "go(ram, school)"
+        output: ("go", ["ram","school"]) """
+    x = x.split("(")
+    func_name = x[0] 
+    params = x[1].replace(")","").replace(" ", "").split(",")    
+    return (func_name, params)
+    
+def isMatchingParams(fparams, params, pos):
+    """ checks if 2 lists of parameters are matching except at index pos (x) 
+        returns true if they match else returns false """
+    if len(params) != len(fparams):
+        return False
+    for i in range(len(params)):
+        if pos!= i:
+            if fparams[i] != params[i]:
+                return False
+    return True
 
+def processListQues(list_questions, facts, questions , vardict):
+    """ returns dictionary of answers for listing type questions """
+    pos = -1
+    flag = True
+    answer = dict()
+    for i in range(len(list_questions)):
+        var = list_questions[i]
+        if( '~' in var):
+          flag = False
+          var = var[1:].strip()
+          list_questions[i] = var
+        x = questions[var]
+        func_name, params = splitParams(x)
+        for i in range(len(params)):
+            if params[i] == 'x':
+                pos = i
+                break 
+        
+        if pos == -1:
+            return dict()
+        
+        final_list = list()
+        for letter,fact in facts.items():
+            fname, fparams = splitParams(fact)
+            if fname == func_name:
+                if (isMatchingParams(fparams,params, pos)):
+                    if(vardict[letter][0] == flag):
+                      final_list.append(fparams[pos])
+        answer[var] = final_list
+
+    return answer
+
+# # checking
+# list_questions = ['~h','b','~c']
+# facts = {"c": "go(ram, school)", "a": "go(ram,home)", "b":"go(john, school,monday)" }
+# questions = {"h": "go(x, home)", "b": "go(ram, x)", "c":"go(x,school)"}
+# answer = processListQues(list_questions, facts, questions)
+# print(answer)
+    
 
 # Driver program to test tree construction and facts processing 
 # a^b -> c
@@ -348,7 +403,7 @@ def my_eval(val1, val2, op):
 #----------
 # a ^~c
 
-def eval_main(eval_input , infix_questions):
+def eval_main(eval_input):
 
   # conditionals = ["ab^c-" , "pb-"]
   # facts = ["p^~c"]
@@ -358,13 +413,14 @@ def eval_main(eval_input , infix_questions):
   # facts = ["avb"]
   # questions = ["a" , "ab~^"] 
   # print("eval_in" , eval_input)
-  # eval_input = [['c d ^ e ~ -> '], [' c e ^ ', ' d ~ '] , ['c ^ ~ d ']]
+  # eval_input = [[] , [] , ['c d ^ e ~ -> '], [' c e ^ ', ' d ~ '] , ['c ^ ~ d ']]
 
-  for i in range(len(eval_input)):
-    for j in range(len(eval_input[i])):
-      eval_input[i][j] = eval_input[i][j].replace(' ','').replace('->','-')
+  facts, list_questions, predFacts, predQuest , nlp_question , nlp_list_question , conditionals , questions = eval_input
 
-  conditionals , questions , facts = eval_input
+  temp = [conditionals , questions , facts]
+  for i in range(len(temp)):
+    for j in range(len(temp[i])):
+      temp[i][j] = temp[i][j].replace(' ','').replace('->','-')
 
   vardict = {} # {a: T, [<nodes where that var occurs>]}
   treeList = []
@@ -397,12 +453,19 @@ def eval_main(eval_input , infix_questions):
 
   for i in range(len(questions)):
     if (isUnknownQuesVars(quesVars[i], vardict)):
-      result[infix_questions[i]] = "Cannot be determined"
-      print("Expression: {:10} Result: {:5}".format(infix_questions[i], "Cannot be determined"))
+      result[nlp_question[i]] = "Cannot be determined"
+      print("Expression: {:10} Result: {:5}".format(nlp_question[i], "Cannot be determined"))
     else:
       obj = Evaluate(len(questions[i]), vardict) 
       ans = str(obj.evaluatePostfix(questions[i]))
-      result[infix_questions[i]] = ans
-      print("Expression: {:10} Result: {:5}".format(infix_questions[i], ans ))
+      result[nlp_question[i]] = ans
+      print("Expression: {:10} Result: {:5}".format(nlp_question[i], ans ))
   
+  answer = processListQues(list_questions, predFacts, predQuest , vardict)
+  print("ANSWER" , answer)
+  for i in range(len(list_questions)):
+    result[nlp_list_question[i]] = ','.join(answer[list_questions[i]])
+    print("Expression: {:10} Result: {:5}".format(nlp_list_question[i], result[nlp_list_question[i]] ))
+    
+
   return result
