@@ -10,9 +10,8 @@ app = Flask(__name__)
 
 # Path to a Python interpreter under the venv
 
-#python_bin = "../modelvenv/bin/python"
-python_bin = "C:\\Users\\sparsha\\modelvenv\\Scripts\\python"
-
+python_bin = "../modelvenv/bin/python"
+# python_bin = "C:\\Users\\sparsha\\modelvenv\\Scripts\\python"
 
 # Path to the script that must run under the venv
 script_file = "restorefinalmodel.py"
@@ -24,9 +23,7 @@ def index():
 @app.route('/', methods = ['POST'])
 def upload():
     user_query = request.form['insert_query']
-    #query = "Mary went to school and John did not. If Mary and John went to school then ram did not. Did mary and ram go to school? Did John not go to school?"
-
-    # result = 'Hello ' + name
+    # query = "Mary went to school and John did not. If Mary and John went to school then Ram did not. Did Mary and Ram go to school? Did John not go to school?"
 
     start = time.time()
     nlp_output = finalnlp.NLP_main(user_query)
@@ -56,14 +53,16 @@ def upload():
         print()
 
         eval_input.extend(model_output)
-        
+
     else:
         eval_input.extend([conditionals , questions])
 
     print("EVAL" , eval_input)
     result = finaleval.eval_main(eval_input)
 
-    # print(nlp_output , model_output , result)
+    print(nlp_output , model_output , result)
+
+    # result = {'Did Mary and Ram go to the school?' : 'True'}
     return render_template('index.html', result = result, mapping = user_query)
 
 if __name__ == '__main__':
