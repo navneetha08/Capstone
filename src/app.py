@@ -22,11 +22,13 @@ def index():
 
 @app.route('/', methods = ['POST'])
 def upload():
-    user_query = request.form['insert_query']
+    user_facts = request.form['insert_facts']
+    user_questions = request.form['insert_questions']
+    print(user_facts, user_questions)
     # query = "Mary went to school and John did not. If Mary and John went to school then Ram did not. Did Mary and Ram go to school? Did John not go to school?"
 
     start = time.time()
-    nlp_output = finalnlp.NLP_main(user_query)
+    nlp_output = finalnlp.NLP_main(' '.join([user_facts, user_questions]))
     end = time.time()
     print("time :", end-start)
 
@@ -36,7 +38,7 @@ def upload():
     print()
 
     eval_input = [facts, list_question, predFacts, predQuest , nlp_question , nlp_list_question]
-    if( questions):
+    if(questions):
         model_input = [conditionals,questions]
         data_comm = open('data.pkl', 'wb')
         pickle.dump(model_input, data_comm)
@@ -63,7 +65,7 @@ def upload():
     print(nlp_output , model_output , result)
 
     # result = {'Did Mary and Ram go to the school?' : 'True'}
-    return render_template('index.html', result = result, mapping = user_query)
+    return render_template('index.html', result = result, mapping = user_facts)
 
 if __name__ == '__main__':
     app.run(debug = True)
