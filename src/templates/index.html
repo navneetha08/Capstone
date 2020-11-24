@@ -4,19 +4,46 @@
 {% endblock title %}
 {% block content %}
     <h2>Home Page</h2>
-	<form id="upload_facts" method="POST">
-		<div class="form-group">
-			<label for="exampleFormControlTextarea1">Facts</label>
-			<textarea class="form-control" name="insert_facts" rows="3"></textarea>
-		</div>
+	<form class="needs-validation" id = "upload_facts" method = "POST" novalidate>
+	    <div class="form-group">
+	        <label for="exampleFormControlTextarea1">Facts</label>
+	        <textarea class="form-control" name="insert_facts" rows="3" required></textarea>
+	        <div class="invalid-feedback">
+	            Facts cannot be empty
+	        </div>
+	    </div>
 
-		<div class="form-group">
-			<label for="exampleFormControlTextarea1">Enter questions</label>
-			<textarea class="form-control" name="insert_questions" rows="3"></textarea>
-		</div>
+	    <div class="form-group">
+	        <label for="exampleFormControlTextarea1">Enter questions</label>
+	        <textarea class="form-control" name="insert_questions" rows="3" required></textarea>
+	        <div class="invalid-feedback">
+	            Please enter atleast one question
+	        </div>
+	    </div>
 
-        <input type = "submit" name = "Solve" value = "Solve">
-    </form>
+	    <input type = "submit" name = "Solve" value = "Solve">
+	</form>
     <br>
+
+	<script>
+	(function() {
+	  'use strict';
+	  window.addEventListener('load', function() {
+	    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	    var forms = document.getElementsByClassName('needs-validation');
+	    // Loop over them and prevent submission
+	    var validation = Array.prototype.filter.call(forms, function(form) {
+	      form.addEventListener('submit', function(event) {
+	        if (form.checkValidity() === false) {
+	          event.preventDefault();
+	          event.stopPropagation();
+	        }
+	        form.classList.add('was-validated');
+	      }, false);
+	    });
+	  }, false);
+	})();
+	</script>
+
     {% include 'result.html' %}
 {% endblock content %}

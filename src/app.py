@@ -2,7 +2,7 @@ import sys
 import subprocess
 import pickle
 from flask import Flask, render_template, request
-# import finalnlp
+import finalnlp
 import finaleval
 import time
 
@@ -22,7 +22,6 @@ def index():
 
 @app.route('/', methods = ['POST'])
 def upload():
-    import finalnlp
     user_facts = request.form['insert_facts']
     user_questions = request.form['insert_questions']
     print(user_facts, user_questions)
@@ -69,4 +68,4 @@ def upload():
     return render_template('index.html', result = result, mapping = user_facts)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug = True)
