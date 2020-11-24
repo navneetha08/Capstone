@@ -454,7 +454,7 @@ def eval_main(eval_input):
   answer = processListQues(list_questions, predFacts, predQuest , vardict)
   print("ANSWER" , answer)
   for i in range(len(list_questions)):
-    result[nlp_list_question[i]] = ','.join(answer[list_questions[i]])
+    result[nlp_list_question[i]] = ', '.join(answer[list_questions[i]])
     print("Expression: {:10} Result: {:5}".format(nlp_list_question[i], result[nlp_list_question[i]] ))
 
 
