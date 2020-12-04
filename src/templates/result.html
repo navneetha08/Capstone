@@ -1,13 +1,52 @@
-<div>
-   {% if mapping %}
-      <h4>Facts recieved</h4>
-      <p>{{mapping}}</p>
-   {% endif %}
+{% extends "layout.html" %}
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/result.css')}}">
+{% endblock header %}
+{% block title %}
+	Results
+{% endblock title %}
+{% block content %}
+    <div class="bg-container-contact100" style="background-image: url('https://images.pexels.com/photos/304664/pexels-photo-304664.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');">
+        <div class="container-table100">
+            <div class="wrap-table100">
 
-   {% if result %}
-      <h4>Results</h4>
-      {% for key, value in result.items() %}
-         <p>{{key}} {{value}}</p>
-      {% endfor %}
-   {% endif %}
-</div>
+                <div class="table100 ver1 m-b-110">
+                    <table data-vertable="ver1">
+                        <thead>
+                            <tr class="row100 head">
+                                <th class="column100 column1" data-column="column1">Facts recieved</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="row100">
+                                <td class="column100 column1" data-column="column1">{{mapping}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <br>
+
+				<div class="table100 ver1 m-b-110">
+					<table data-vertable="ver">
+						<thead>
+							<tr class="row100 head">
+								<th class="column100 column1" data-column="column1">Results</th>
+								<th class="column100 column1" data-column="column1"></th>
+							</tr>
+						</thead>
+						<tbody>
+                            {% for key, value in result.items() %}
+                                <tr class="row100">
+                                    <td class="column100 column1" data-column="column1">{{key}}</td>
+                                    <td class="column100 column2" data-column="column2">{{value}}</td>
+                                </tr>
+                            {% endfor %}
+						</tbody>
+					</table>
+				</div>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}
