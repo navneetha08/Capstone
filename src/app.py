@@ -22,6 +22,7 @@ def index():
 
 @app.route('/', methods = ['POST'])
 def upload():
+    # import finalnlp
     user_facts = request.form['insert_facts']
     user_questions = request.form['insert_questions']
     print(user_facts, user_questions)
@@ -65,7 +66,7 @@ def upload():
     print(nlp_output , model_output , result)
 
     # result = {'Did Mary and Ram go to the school?' : 'True'}
-    return render_template('index.html', result = result, mapping = user_facts)
+    return render_template('result.html', result = result, mapping = user_facts)
 
 if __name__ == '__main__':
     app.run(debug = True)
