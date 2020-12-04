@@ -1,29 +1,42 @@
 {% extends "layout.html" %}
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock header %}
 {% block title %}
 	Home Page
 {% endblock title %}
 {% block content %}
-    <h2>Domain Specific Program Synthesis</h2>
-	<form class="needs-validation" id = "upload_facts" method = "POST" novalidate>
-	    <div class="form-group">
-	        <label for="exampleFormControlTextarea1">Facts</label>
-	        <textarea class="form-control" name="insert_facts" rows="3" required></textarea>
-	        <div class="invalid-feedback">
-	            Facts cannot be empty
-	        </div>
-	    </div>
+	<div class="bg-container-contact100" style="background-image: url('https://images.pexels.com/photos/304664/pexels-photo-304664.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');">
+	</div>
 
-	    <div class="form-group">
-	        <label for="exampleFormControlTextarea1">Enter questions</label>
-	        <textarea class="form-control" name="insert_questions" rows="3" required></textarea>
-	        <div class="invalid-feedback">
-	            Please enter atleast one question
-	        </div>
-	    </div>
+	<div class="container-contact100">
+		<div class="wrap-contact100">
 
-	    <input type = "submit" name = "Solve" value = "Solve">
-	</form>
-    <br>
+			<div class="contact100-form-title" style="background-image: url(../static/images/bg.jpg);">
+				<span>Boolean Oracle</span>
+			</div>
+
+            <form class="contact100-form needs-validation" id = "upload_facts" method = "POST" novalidate>
+        	    <div class="wrap-input100 form-group">
+        	        <label class="exampleFormControlTextarea1">Facts</label>
+        	        <textarea class="form-control" name="insert_facts" rows="3" required></textarea>
+        	        <div class="invalid-feedback">
+        	            Facts cannot be empty
+        	        </div>
+        	    </div>
+
+				<div class="wrap-input100 form-group">
+					<label class="exampleFormControlTextarea1">Enter questions</label>
+					<textarea class="form-control" name="insert_questions" rows="3" required></textarea>
+					<div class="invalid-feedback">
+						Please enter atleast one question
+					</div>
+				</div>
+
+        	    <input class = "contact100-form-btn" type = "submit" name = "Solve" value = "Solve">
+        	</form>
+		</div>
+	</div>
 
 	<script>
 	(function() {
