@@ -88,29 +88,64 @@
     			NLP output
     		</div>
     		<p>
+                {% if nlp_output[0] %}
+                Conditionals represented as Boolean expressions - <br>
+                    {% for cond in nlp_output[0] %}
+                        {{cond}} <br>
+                    {% endfor %}
+                {% endif %}
+
     			Facts represented as Boolean expressions - <br>
     			{% for fact in nlp_output[1] %}
     				{{fact}} <br>
     			{% endfor %}
 
-    			questions represented as Boolean expressions - <br>
-    			{% for ques in nlp_output[2] %}
-    				{{ques}} <br>
-    			{% endfor %}
+                {% if nlp_output[2] %}
+        			questions represented as Boolean expressions - <br>
+        			{% for ques in nlp_output[2] %}
+        				{{ques}} <br>
+        			{% endfor %}
+                {% endif %}
+
+                {% if nlp_output[6] %}
+                    list questions represented as Boolean expressions - <br>
+        			{% for ques in nlp_output[6] %}
+        				{{ques}} <br>
+        			{% endfor %}
+                {% endif %}
 
     			Facts represented in parametrized form - <br>
     			{% for key, value in nlp_output[3].items() %}
     				{{key}} : {{value}} <br>
     			{% endfor %}
 
-    			questions in parametrized form - <br>
-    			{% for key, value in nlp_output[4].items() %}
-    				{{key}} : {{value}} <br>
-    			{% endfor %}
+                {% if nlp_output[4] %}
+        			questions in parametrized form - <br>
+        			{% for key, value in nlp_output[4].items() %}
+        				{{key}} : {{value}} <br>
+        			{% endfor %}
+                {% endif %}
     		</p>
-            <div class="h3">
-    			Encoder-Decoder model output
-    		</div>
+
+            {% if model_output %}
+                <div class="h3">
+        			Encoder-Decoder model output
+        		</div>
+                <p>
+                    {% if model_output[0] %}
+                        Conditionals expressions - <br>
+                        {% for fact in model_output[0] %}
+                            {{fact}} <br>
+                        {% endfor %}
+                    {% endif %}
+
+                    questions expressions - <br>
+                    {% for ques in model_output[1] %}
+                        {{ques}} <br>
+                    {% endfor %}
+                </p>
+            {% endif %}
+
     	</div>
 </div>
 {% endblock content %}
