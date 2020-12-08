@@ -2,14 +2,13 @@ import sys
 import subprocess
 import pickle
 from flask import Flask, render_template, request
-# import finalnlp
+import finalnlp
 import finaleval
 import time
 
 app = Flask(__name__)
 
 # Path to a Python interpreter under the venv
-
 python_bin = "../modelvenv/bin/python"
 # python_bin = "C:\\Users\\sparsha\\modelvenv\\Scripts\\python"
 
@@ -22,10 +21,12 @@ def index():
 
 @app.route('/', methods = ['POST'])
 def upload():
-    import finalnlp
+    # import finalnlp
     user_facts = request.form['insert_facts']
     user_questions = request.form['insert_questions']
     print(user_facts, user_questions)
+    model_output = list()
+
     # query = "Mary went to school and John did not. If Mary and John went to school then Ram did not. Did Mary and Ram go to school? Did John not go to school?"
 
     start = time.time()
@@ -33,9 +34,9 @@ def upload():
     end = time.time()
     print("time :", end-start)
 
-    conditionals, facts, questions, predFacts, predQuest , nlp_question , list_question , nlp_list_question = nlp_output
+    conditionals, facts, questions, predFacts, predQuest, nlp_question, list_question, nlp_list_question = nlp_output
     print()
-    print("nlp_output : " , nlp_output)
+    print("nlp_output :", nlp_output)
     print()
 
     eval_input = [facts, list_question, predFacts, predQuest, nlp_question, nlp_list_question]
@@ -52,7 +53,7 @@ def upload():
         model_output = pickle.load(f2)
         f2.close()
         print()
-        print("model_output : " , model_output)
+        print("model_output :", model_output)
         print()
 
         eval_input.extend(model_output)
@@ -60,15 +61,16 @@ def upload():
     else:
         eval_input.extend([conditionals , questions])
 
-    print("EVAL" , eval_input)
+    print("EVAL", eval_input)
     result = finaleval.eval_main(eval_input)
 
-    print(nlp_output , model_output , result)
+    # print(nlp_output , model_output , result)
 
-    # nlp_output = [[], ['a', 'b ^ c'], ['a'], {'a': 'go(mary,school)', 'b': 'eat(mary,cake)', 'c': 'eat(mary,bread)'}, {'a': 'go(mary,school)', 'e': 'eat(mary,x)'}, ['Did Mary go to school?'], ['e'], ['What did Mary eat?']]
-    # eval_input = [['a', 'b ^ c'], ['e'], {'a': 'go(mary,school)', 'b': 'eat(mary,cake)', 'c': 'eat(mary,bread)'}, {'a': 'go(mary,school)', 'e': 'eat(mary,x)'}, ['Did Mary go to school?'], ['What did Mary eat?'], [], ['a']]
-    # result = {'Did Mary and Ram go to the school?' : 'True'}
-    return render_template('result.html', result = result, mapping = user_facts, nlp_output = nlp_output, eval_input = eval_input)
+    # model_input = [['b - c'], ['c']]
+    # model_output = [['b c  -> '], ['c']]
+    # nlp_output = [['b - c'], ['b', 'd'], ['c'], {'b': 'go(mary,school)', 'c': 'go(john,school)', 'd': 'go(mary,hospital)'}, {'e': 'go(mary,x)', 'c': 'go(john,school)'}, ['Did John go to school?'], ['e'], ['Where did Mary go?']]
+    # result = {'Did John go to school?' : 'True', 'Where did Mary go?': 'school, hospital'}
+    return render_template('result.html', result = result, mapping = user_facts, nlp_output = nlp_output, model_output = model_output)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug = True)
