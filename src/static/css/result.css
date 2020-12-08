@@ -16,6 +16,8 @@
   min-height: 100vh;
   background-color: white;
   background-image: url('https://images.pexels.com/photos/304664/pexels-photo-304664.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
+  background-repeat: no-repeat;
+  background-size: cover;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;

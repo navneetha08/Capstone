@@ -2,7 +2,7 @@ import sys
 import subprocess
 import pickle
 from flask import Flask, render_template, request
-import finalnlp
+# import finalnlp
 import finaleval
 import time
 
@@ -18,11 +18,11 @@ script_file = "restorefinalmodel.py"
 
 @app.route('/')
 def index():
-    return render_template('index.html', result = dict() , mapping = "" )
+    return render_template('index.html', result = dict() , mapping = "")
 
 @app.route('/', methods = ['POST'])
 def upload():
-    # import finalnlp
+    import finalnlp
     user_facts = request.form['insert_facts']
     user_questions = request.form['insert_questions']
     print(user_facts, user_questions)
@@ -38,7 +38,7 @@ def upload():
     print("nlp_output : " , nlp_output)
     print()
 
-    eval_input = [facts, list_question, predFacts, predQuest , nlp_question , nlp_list_question]
+    eval_input = [facts, list_question, predFacts, predQuest, nlp_question, nlp_list_question]
     if(questions):
         model_input = [conditionals,questions]
         data_comm = open('data.pkl', 'wb')
@@ -65,8 +65,10 @@ def upload():
 
     print(nlp_output , model_output , result)
 
+    # nlp_output = [[], ['a', 'b ^ c'], ['a'], {'a': 'go(mary,school)', 'b': 'eat(mary,cake)', 'c': 'eat(mary,bread)'}, {'a': 'go(mary,school)', 'e': 'eat(mary,x)'}, ['Did Mary go to school?'], ['e'], ['What did Mary eat?']]
+    # eval_input = [['a', 'b ^ c'], ['e'], {'a': 'go(mary,school)', 'b': 'eat(mary,cake)', 'c': 'eat(mary,bread)'}, {'a': 'go(mary,school)', 'e': 'eat(mary,x)'}, ['Did Mary go to school?'], ['What did Mary eat?'], [], ['a']]
     # result = {'Did Mary and Ram go to the school?' : 'True'}
-    return render_template('result.html', result = result, mapping = user_facts)
+    return render_template('result.html', result = result, mapping = user_facts, nlp_output = nlp_output, eval_input = eval_input)
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run()

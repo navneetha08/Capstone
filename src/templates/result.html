@@ -1,52 +1,116 @@
 {% extends "layout.html" %}
 {% block header %}
+    <style>
+        body {
+          margin: 0;
+        }
+
+        html {
+          box-sizing: border-box;
+        }
+
+        *, *:before, *:after {
+          box-sizing: inherit;
+        }
+
+        .intermediate-results {
+          padding-top: 100px;
+          padding-left: 150px;
+          padding-right: 150px;
+          text-align: center;
+          color: black;
+          font-family: cursive;
+          font-style: italic;
+          font-size: 20px;
+        }
+
+        @media screen and (max-width: 650px) {
+          .column {
+            width: 100%;
+            display: block;
+          }
+        }
+    </style>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/result.css')}}">
 {% endblock header %}
 {% block title %}
 	Results
 {% endblock title %}
 {% block content %}
-    <div class="bg-container-contact100" style="background-image: url('https://images.pexels.com/photos/304664/pexels-photo-304664.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');">
-        <div class="container-table100">
-            <div class="wrap-table100">
+<div class="row">
+    <div class="col-md-6 boxlayout">
+            <div class="container-table100">
+                <div class="wrap-table100">
 
-                <div class="table100 ver1 m-b-110">
-                    <table data-vertable="ver1">
-                        <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Facts recieved</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="row100">
-                                <td class="column100 column1" data-column="column1">{{mapping}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <br>
-
-				<div class="table100 ver1 m-b-110">
-					<table data-vertable="ver">
-						<thead>
-							<tr class="row100 head">
-								<th class="column100 column1" data-column="column1">Results</th>
-								<th class="column100 column1" data-column="column1"></th>
-							</tr>
-						</thead>
-						<tbody>
-                            {% for key, value in result.items() %}
-                                <tr class="row100">
-                                    <td class="column100 column1" data-column="column1">{{key}}</td>
-                                    <td class="column100 column2" data-column="column2">{{value}}</td>
+                    <div class="table100 ver1 m-b-110">
+                        <table data-vertable="ver1">
+                            <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Facts recieved</th>
                                 </tr>
-                            {% endfor %}
-						</tbody>
-					</table>
-				</div>
+                            </thead>
+                            <tbody>
+                                <tr class="row100">
+                                    <td class="column100 column1" data-column="column1">{{mapping}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
+                    <br>
+
+    				<div class="table100 ver1 m-b-110">
+    					<table data-vertable="ver">
+    						<thead>
+    							<tr class="row100 head">
+    								<th class="column100 column1" data-column="column1">Results</th>
+    								<th class="column100 column1" data-column="column1"></th>
+    							</tr>
+    						</thead>
+    						<tbody>
+                                {% for key, value in result.items() %}
+                                    <tr class="row100">
+                                        <td class="column100 column1" data-column="column1">{{key}}</td>
+                                        <td class="column100 column2" data-column="column2">{{value}}</td>
+                                    </tr>
+                                {% endfor %}
+    						</tbody>
+    					</table>
+    				</div>
+
+                </div>
             </div>
-        </div>
     </div>
+
+    <div class="border row col-md-6 boxlayout">
+        <div class="intermediate-results">
+    		<div class="h3">
+    			NLP output
+    		</div>
+    		<p>
+    			Facts represented as Boolean expressions - <br>
+    			{% for fact in nlp_output[1] %}
+    				{{fact}} <br>
+    			{% endfor %}
+
+    			questions represented as Boolean expressions - <br>
+    			{% for ques in nlp_output[2] %}
+    				{{ques}} <br>
+    			{% endfor %}
+
+    			Facts represented in parametrized form - <br>
+    			{% for key, value in nlp_output[3].items() %}
+    				{{key}} : {{value}} <br>
+    			{% endfor %}
+
+    			questions in parametrized form - <br>
+    			{% for key, value in nlp_output[4].items() %}
+    				{{key}} : {{value}} <br>
+    			{% endfor %}
+    		</p>
+            <div class="h3">
+    			Encoder-Decoder model output
+    		</div>
+    	</div>
+</div>
 {% endblock content %}

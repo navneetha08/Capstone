@@ -1,42 +1,110 @@
 {% extends "layout.html" %}
 {% block header %}
+    <style>
+        body {
+          margin: 0;
+        }
+
+        html {
+          box-sizing: border-box;
+        }
+
+        *, *:before, *:after {
+          box-sizing: inherit;
+        }
+
+
+        .about-section {
+          padding-top: 100px;
+          padding-left: 150px;
+          padding-right: 150px;
+          text-align: center;
+          color: black;
+          font-family: cursive;
+          font-style: italic;
+          font-size: 20px;
+        }
+
+        @media screen and (max-width: 650px) {
+          .column {
+            width: 100%;
+            display: block;
+          }
+        }
+    </style>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
 {% endblock header %}
 {% block title %}
 	Home Page
 {% endblock title %}
 {% block content %}
-	<div class="bg-container-contact100" style="background-image: url('https://images.pexels.com/photos/304664/pexels-photo-304664.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');">
-	</div>
+<div class="row">
+    <div class="border row col-md-6 boxlayout">
 
-	<div class="container-contact100">
-		<div class="wrap-contact100">
+	<!-- <div class="bg-container-contact100" style="background-image: url('https://images.pexels.com/photos/304664/pexels-photo-304664.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');">
+	</div> -->
 
-			<div class="contact100-form-title" style="background-image: url(../static/images/bg.jpg);">
-				<span>Boolean Oracle</span>
-			</div>
+    	<div class="container-contact100">
+    		<div class="wrap-contact100">
 
-            <form class="contact100-form needs-validation" id = "upload_facts" method = "POST" novalidate>
-        	    <div class="wrap-input100 form-group">
-        	        <label class="exampleFormControlTextarea1">Facts</label>
-        	        <textarea class="form-control" name="insert_facts" rows="3" required></textarea>
-        	        <div class="invalid-feedback">
-        	            Facts cannot be empty
-        	        </div>
-        	    </div>
+    			<div class="contact100-form-title" style="background-image: url(../static/images/bg.jpg);">
+    				<span>Boolean Oracle</span>
+    			</div>
 
-				<div class="wrap-input100 form-group">
-					<label class="exampleFormControlTextarea1">Enter questions</label>
-					<textarea class="form-control" name="insert_questions" rows="3" required></textarea>
-					<div class="invalid-feedback">
-						Please enter atleast one question
-					</div>
-				</div>
+                <form class="contact100-form needs-validation" id = "upload_facts" method = "POST" novalidate>
+            	    <div class="wrap-input100 form-group">
+            	        <label class="exampleFormControlTextarea1">Facts</label>
+            	        <textarea class="form-control" name="insert_facts" rows="3" required></textarea>
+            	        <div class="invalid-feedback">
+            	            Facts cannot be empty
+            	        </div>
+            	    </div>
 
-        	    <input class = "contact100-form-btn" type = "submit" name = "Solve" value = "Solve">
-        	</form>
-		</div>
-	</div>
+    				<div class="wrap-input100 form-group">
+    					<label class="exampleFormControlTextarea1">Enter questions</label>
+    					<textarea class="form-control" name="insert_questions" rows="3" required></textarea>
+    					<div class="invalid-feedback">
+    						Please enter atleast one question
+    					</div>
+    				</div>
+
+            	    <input class = "contact100-form-btn" type = "submit" name = "Solve" value = "Solve">
+            	</form>
+    		</div>
+    	</div>
+    </div>
+
+    <div class="border row col-md-6 boxlayout about-section">
+        <!-- <h1>BOOLEAN ORACLE</h1> -->
+        <p>
+            This tool uses Natural Language Processing and Machine Learning
+            techniques to solve a propositional logic word problem.
+            It takes facts and questions as input, and determines the results.
+        </p>
+        <p>
+            For eg. ,
+            Facts: If it rains today, I will take an umbrella. <br>
+              I did not take an umbrella today. <br>
+            Question: Did it rain today? <br>
+
+            Result: Did it rain? False.<br>
+        </p>
+        <p>
+            The tool is also capable of handling 'Wh' questions:
+            Who, Where, and What <br>
+        </p>
+        <p>
+            E.g.
+            Facts: If John and Susan go to school, Jack will go home.
+              Susan went to school and Jack did not go home. <br>
+            Question: Did John go to school? Who went to school?
+            <br>
+            Result: Did John go to school? False<br>
+              Who went to school? Susan
+        </p>
+        Check out the tool to get started!
+    </div>
+</div>
 
 	<script>
 	(function() {
