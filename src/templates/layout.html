@@ -12,7 +12,7 @@
   <title>{% block title %}{% endblock %}</title>
 </head>
 <!-- <body> -->
-<body style="background-image: url('https://images.pexels.com/photos/304664/pexels-photo-304664.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'); background-size: 100% 100%;">
+<body style="background-image: url('../static/images/blue1.jpeg'); background-size: cover; background-repeat: no-repeat; background-position: left bottom;">
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <a href="#" class="navbar-brand">
             <img src="{{ url_for('static', filename='images/logo.png') }}" height="50">
@@ -22,9 +22,7 @@
                 <li class="nav-item">
                     <a href="/" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a href="/about" class="nav-link">About</a>
-                </li>
+            
             </ul>
         </div>
     </nav>

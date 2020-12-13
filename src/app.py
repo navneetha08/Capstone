@@ -9,8 +9,8 @@ import time
 app = Flask(__name__)
 
 # Path to a Python interpreter under the venv
-python_bin = "../modelvenv/bin/python"
-# python_bin = "C:\\Users\\sparsha\\modelvenv\\Scripts\\python"
+#python_bin = "../modelvenv/bin/python"
+python_bin = "C:\\Users\\sparsha\\modelvenv\\Scripts\\python"
 
 # Path to the script that must run under the venv
 script_file = "restorefinalmodel.py"

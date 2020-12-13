@@ -14,10 +14,10 @@
 .container-table100 {
   width: 100%;
   min-height: 100vh;
-  background-color: white;
+  /* background-color: white;
   background-image: url('https://images.pexels.com/photos/304664/pexels-photo-304664.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -27,7 +27,7 @@
   justify-content: center;
   flex-wrap: wrap;
   padding: 33px 30px;
-}
+} 
 
 .wrap-table100 {
   width: 700px;
@@ -96,4 +96,47 @@ th, td {
 .table100.ver1 .row100 td:hover {
   background-color: #6c7ae0;
   color: #fff;
+}
+
+.contact100-form-btn {
+  font-size: 12px;
+  color: #fff;
+  color: black;
+  line-height: 1.2;
+  text-transform: uppercase;
+  margin-right: 200px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+
+  align-items: center;
+  padding: 0 50px;
+  min-width: 160px;
+  height: 42px;
+  border-radius: 21px;
+  /* background: #846add; */
+  background: lightblue;
+
+  box-shadow: 0 10px 30px 0px rgba(132, 106, 221, 0.5);
+  -moz-box-shadow: 0 10px 30px 0px rgba(132, 106, 221, 0.5);
+  -webkit-box-shadow: 0 10px 30px 0px rgba(132, 106, 221, 0.5);
+  -o-box-shadow: 0 10px 30px 0px rgba(132, 106, 221, 0.5);
+  -ms-box-shadow: 0 10px 30px 0px rgba(132, 106, 221, 0.5);
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.contact100-form-btn:hover {
+  background: #0992b4;
+  box-shadow: 0 10px 30px 0px rgba(51, 51, 51, 0.5);
+  -moz-box-shadow: 0 10px 30px 0px rgba(51, 51, 51, 0.5);
+  -webkit-box-shadow: 0 10px 30px 0px rgba(51, 51, 51, 0.5);
+  -o-box-shadow: 0 10px 30px 0px rgba(51, 51, 51, 0.5);
+  -ms-box-shadow: 0 10px 30px 0px rgba(51, 51, 51, 0.5);
 }

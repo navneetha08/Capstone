@@ -12,6 +12,17 @@
         *, *:before, *:after {
           box-sizing: inherit;
         }
+        div#loading {
+          position: absolute;
+        width: 35px;
+        height: 35px;
+        display: none;
+        left: 50%;
+        top: 50%;
+        z-index: 1000;
+        /* background: url('../static/images/logo.png') no-repeat; */
+        cursor: wait;
+        }
 
         .about-section {
           padding-top: 100px;
@@ -37,42 +48,10 @@
 	Home Page
 {% endblock title %}
 {% block content %}
-<div class="row">
-    <div class="border row col-md-6 boxlayout">
 
-	<!-- <div class="bg-container-contact100" style="background-image: url('https://images.pexels.com/photos/304664/pexels-photo-304664.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');">
-	</div> -->
-
-    	<div class="container-contact100">
-    		<div class="wrap-contact100">
-
-    			<div class="contact100-form-title" style="background-image: url(../static/images/bg.jpg);">
-    				<span>Boolean Oracle</span>
-    			</div>
-
-                <form class="contact100-form needs-validation" id = "upload_facts" method = "POST" novalidate>
-            	    <div class="wrap-input100 form-group">
-            	        <label class="exampleFormControlTextarea1">Facts</label>
-            	        <textarea class="form-control" name="insert_facts" rows="3" required></textarea>
-            	        <div class="invalid-feedback">
-            	            Facts cannot be empty
-            	        </div>
-            	    </div>
-
-    				<div class="wrap-input100 form-group">
-    					<label class="exampleFormControlTextarea1">Enter questions</label>
-    					<textarea class="form-control" name="insert_questions" rows="3" required></textarea>
-    					<div class="invalid-feedback">
-    						Please enter atleast one question
-    					</div>
-    				</div>
-
-            	    <input class = "contact100-form-btn" type = "submit" name = "Solve" value = "Solve">
-            	</form>
-    		</div>
-    	</div>
-    </div>
-
+<div id="loading" style="background-image: url('../static/images/blue1.jpeg');"><img src="../static/images/ajax-loader.gif" height="50px"  width="50px"> </img> </div>
+<div class="row" id="content">
+    
     <div class="border row col-md-6 boxlayout about-section">
         <!-- <h1>BOOLEAN ORACLE</h1> -->
         <p>
@@ -101,8 +80,47 @@
             Result: Did John go to school? False<br>
               Who went to school? Susan
         </p>
-        Check out the tool to get started!
+        <p>
+          <b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+            Check out the tool to get started! </b>
+        </p>
+        
     </div>
+
+    <div class="border row col-md-6 boxlayout">
+
+      <!-- <div class="bg-container-contact100" style="background-image: url('https://images.pexels.com/photos/304664/pexels-photo-304664.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');">
+      </div> -->
+    
+          <div class="container-contact100">
+            <div class="wrap-contact100">
+    
+              <div class="contact100-form-title" style="background-image: url(../static/images/bg.jpg);">
+                <span>Boolean Oracle</span>
+              </div>
+    
+                    <form class="contact100-form needs-validation" id = "upload_facts" method = "POST" novalidate>
+                      <div class="wrap-input100 form-group">
+                          <label class="exampleFormControlTextarea1">Facts</label>
+                          <textarea class="form-control" name="insert_facts" rows="3" required></textarea>
+                          <div class="invalid-feedback">
+                              Facts cannot be empty
+                          </div>
+                      </div>
+    
+                <div class="wrap-input100 form-group">
+                  <label class="exampleFormControlTextarea1">Enter questions</label>
+                  <textarea class="form-control" name="insert_questions" rows="3" required></textarea>
+                  <div class="invalid-feedback">
+                    Please enter atleast one question
+                  </div>
+                </div>
+    
+                      <input class = "contact100-form-btn" type = "submit" name = "Solve" value = "Solve" onclick="loading();">
+                  </form>
+            </div>
+          </div>
+        </div>
 </div>
 
 	<script>
@@ -124,5 +142,12 @@
 	  }, false);
 	})();
 	</script>
-
+  <script type="text/javascript">// <![CDATA[
+    function loading(){
+      document.getElementById("loading").style.display = "block";
+      // document.getElementById("content").style.display = "none";
+        // $("#loading").show();
+        // $("#content").hide();       
+    }
+// ]]></script>
 {% endblock content %}
