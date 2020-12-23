@@ -1,163 +1,129 @@
 {% extends "layout.html" %}
 {% block header %}
-    <style>
-        body {
-          margin: 0;
-        }
-
-        html {
-          box-sizing: border-box;
-        }
-
-        *, *:before, *:after {
-          box-sizing: inherit;
-        }
-
-        .intermediate-results, #panel{
-          padding-top: 100px;
-          padding-left: 150px;
-          padding-right: 150px;
-          text-align: center;
-          color: black;
-          font-family: cursive;
-          font-style: italic;
-          font-size: 20px;
-          /* background-color: white; */
-        }
-        #panel {
-        display: none;
-        }
-        @media screen and (max-width: 650px) {
-          .column {
-            width: 100%;
-            display: block;
-          }
-        }
-    </style>
-    
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/result.css')}}">
 {% endblock header %}
 {% block title %}
 	Results
 {% endblock title %}
 {% block content %}
-<div class="row">
-    <div class="col-md-6 boxlayout">
-            <div class="container-table100">
-                <div class="wrap-table100">
+    <section>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="container-table100">
+                    <div class="wrap-table100">
 
-                    <div class="table100 ver1 m-b-110">
-                        <table data-vertable="ver1">
-                            <thead>
-                                <tr class="row100 head">
-                                    <th class="column100 column1" data-column="column1">Facts recieved</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="row100">
-                                    <td class="column100 column1" data-column="column1">{{mapping}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <br>
-
-    				<div class="table100 ver1 m-b-110">
-    					<table data-vertable="ver">
-    						<thead>
-    							<tr class="row100 head">
-    								<th class="column100 column1" data-column="column1">Results</th>
-    								<th class="column100 column1" data-column="column1"></th>
-    							</tr>
-    						</thead>
-    						<tbody>
-                                {% for key, value in result.items() %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">{{key}}</td>
-                                        <td class="column100 column2" data-column="column2">{{value}}</td>
+                        <div class="table100 ver1 m-b-110">
+                            <table data-vertable="ver1">
+                                <thead>
+                                    <tr class="row100 head">
+                                        <th class="column100 column1" data-column="column1">Facts recieved</th>
                                     </tr>
-                                {% endfor %}
-    						</tbody>
-    					</table>
-    				</div>
-                
+                                </thead>
+                                <tbody>
+                                    <tr class="row100">
+                                        <td class="column100 column1" data-column="column1">{{mapping}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <br>
+
+        				<div class="table100 ver1 m-b-110">
+        					<table data-vertable="ver">
+        						<thead>
+        							<tr class="row100 head">
+        								<th class="column100 column1" data-column="column1">Results</th>
+        								<th class="column100 column1" data-column="column1"></th>
+        							</tr>
+        						</thead>
+        						<tbody>
+                                    {% for key, value in result.items() %}
+                                        <tr class="row100">
+                                            <td class="column100 column1" data-column="column1">{{key}}</td>
+                                            <td class="column100 column2" data-column="column2">{{value}}</td>
+                                        </tr>
+                                    {% endfor %}
+        						</tbody>
+        					</table>
+        				</div>
+
+                    </div>
+                    <input class = "intermediate-btn" type = "submit" value = "Display Intermediate Results" onclick="myFunction()">
                 </div>
-                <input class = "contact100-form-btn" type = "submit" name = "Intermediate" value = "Display Intermediate Results" onclick="myFunction()">
             </div>
-            
-    </div>
 
-    <div class="border row col-md-6 boxlayout">
-        <div id="panel" class="intermediate-results">
-    		<div class="h3">
-    			NLP output
-    		</div>
-    		<p>
-                {% if nlp_output[0] %}
-                <b> Conditionals represented as Boolean expressions - </b> <br>
-                    {% for cond in nlp_output[0] %}
-                        {{cond}} <br>
-                    {% endfor %}
-                {% endif %}
+            <div class="col-md-6 text-center">
+                <div id="panel" class="intermediate-results">
+            		<div class="h3">
+            			NLP output
+            		</div>
+            		<p>
+                        {% if nlp_output[0] %}
+                        <b> Conditionals represented as Boolean expressions - </b> <br>
+                            {% for cond in nlp_output[0] %}
+                                {{cond}} <br>
+                            {% endfor %}
+                        {% endif %}
 
-    			<b> Facts represented as Boolean expressions - </b><br>
-    			{% for fact in nlp_output[1] %}
-    				{{fact}} <br>
-    			{% endfor %}
+            			<b> Facts represented as Boolean expressions - </b><br>
+            			{% for fact in nlp_output[1] %}
+            				{{fact}} <br>
+            			{% endfor %}
 
-                {% if nlp_output[2] %}
-        			<b> Questions represented as Boolean expressions - </b><br>
-        			{% for ques in nlp_output[2] %}
-        				{{ques}} <br>
-        			{% endfor %}
-                {% endif %}
+                        {% if nlp_output[2] %}
+                			<b> Questions represented as Boolean expressions - </b><br>
+                			{% for ques in nlp_output[2] %}
+                				{{ques}} <br>
+                			{% endfor %}
+                        {% endif %}
 
-                {% if nlp_output[6] %}
-                    <b> List questions represented as Boolean expressions - </b><br>
-        			{% for ques in nlp_output[6] %}
-        				{{ques}} <br>
-        			{% endfor %}
-                {% endif %}
+                        {% if nlp_output[6] %}
+                            <b> List questions represented as Boolean expressions - </b><br>
+                			{% for ques in nlp_output[6] %}
+                				{{ques}} <br>
+                			{% endfor %}
+                        {% endif %}
 
-    			<b> Facts represented in parametrized form - </b><br>
-    			{% for key, value in nlp_output[3].items() %}
-    				{{key}} : {{value}} <br>
-    			{% endfor %}
+            			<b> Facts represented in parametrized form - </b><br>
+            			{% for key, value in nlp_output[3].items() %}
+            				{{key}} : {{value}} <br>
+            			{% endfor %}
 
-                {% if nlp_output[4] %}
-        			<b> Questions in parametrized form - </b><br>
-        			{% for key, value in nlp_output[4].items() %}
-        				{{key}} : {{value}} <br>
-        			{% endfor %}
-                {% endif %}
-    		</p>
+                        {% if nlp_output[4] %}
+                			<b> Questions in parametrized form - </b><br>
+                			{% for key, value in nlp_output[4].items() %}
+                				{{key}} : {{value}} <br>
+                			{% endfor %}
+                        {% endif %}
+            		</p>
 
-            {% if model_output %}
-                <div class="h3">
-        			Encoder-Decoder model output
-        		</div>
-                <p>
-                    {% if model_output[0] %}
-                        <b> Conditionals expressions - </b> <br>
-                        {% for fact in model_output[0] %}
-                            {{fact}} <br>
-                        {% endfor %}
+                    {% if model_output %}
+                        <div class="h3">
+                			Encoder-Decoder model output
+                		</div>
+                        <p>
+                            {% if model_output[0] %}
+                                <b> Conditionals expressions - </b> <br>
+                                {% for fact in model_output[0] %}
+                                    {{fact}} <br>
+                                {% endfor %}
+                            {% endif %}
+
+                            <b> Questions expressions - </b><br>
+                            {% for ques in model_output[1] %}
+                                {{ques}} <br>
+                            {% endfor %}
+                        </p>
                     {% endif %}
 
-                    <b> Questions expressions - </b><br>
-                    {% for ques in model_output[1] %}
-                        {{ques}} <br>
-                    {% endfor %}
-                </p>
-            {% endif %}
+            	</div>
+            </div>
+    </section>
 
-    	</div>
-</div>
-
-<script>
-    function myFunction() {
-      document.getElementById("panel").style.display = "block";
-    }
-</script>
+    <script>
+        function myFunction() {
+            document.getElementById("panel").style.display = "block";
+        }
+    </script>
 {% endblock content %}

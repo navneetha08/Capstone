@@ -1,128 +1,76 @@
 {% extends "layout.html" %}
 {% block header %}
-    <style>
-        body {
-          margin: 0;
-        }
-
-        html {
-          box-sizing: border-box;
-        }
-
-        *, *:before, *:after {
-          box-sizing: inherit;
-        }
-        div#loading {
-          position: absolute;
-        width: 35px;
-        height: 35px;
-        display: none;
-        left: 50%;
-        top: 50%;
-        z-index: 1000;
-        /* background: url('../static/images/logo.png') no-repeat; */
-        cursor: wait;
-        }
-
-        .about-section {
-          padding-top: 100px;
-          padding-left: 150px;
-          padding-right: 150px;
-          text-align: center;
-          color: black;
-          font-family: cursive;
-          font-style: italic;
-          font-size: 20px;
-        }
-
-        @media screen and (max-width: 650px) {
-          .column {
-            width: 100%;
-            display: block;
-          }
-        }
-    </style>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css')}}">
 {% endblock header %}
 {% block title %}
-	Home Page
+	Home
 {% endblock title %}
 {% block content %}
-
-<div id="loading" style="background-image: url('../static/images/blue1.jpeg');"><img src="../static/images/ajax-loader.gif" height="50px"  width="50px"> </img> </div>
-<div class="row" id="content">
-    
-    <div class="border row col-md-6 boxlayout about-section">
-        <!-- <h1>BOOLEAN ORACLE</h1> -->
-        <p>
-            This tool uses Natural Language Processing and Machine Learning
-            techniques to solve a propositional logic word problem.
-            It takes facts and questions as input, and determines the results.
-        </p>
-        <p>
-            For eg. ,
-            Facts: If it rains today, I will take an umbrella. <br>
-              I did not take an umbrella today. <br>
-            Question: Did it rain today? <br>
-
-            Result: Did it rain? False.<br>
-        </p>
-        <p>
-            The tool is also capable of handling 'Wh' questions:
-            Who, Where, and What <br>
-        </p>
-        <p>
-            E.g.
-            Facts: If John and Susan go to school, Jack will go home.
-              Susan went to school and Jack did not go home. <br>
-            Question: Did John go to school? Who went to school?
-            <br>
-            Result: Did John go to school? False<br>
-              Who went to school? Susan
-        </p>
-        <p>
-          <b> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-            Check out the tool to get started! </b>
-        </p>
-        
-    </div>
-
-    <div class="border row col-md-6 boxlayout">
-
-      <!-- <div class="bg-container-contact100" style="background-image: url('https://images.pexels.com/photos/304664/pexels-photo-304664.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500');">
-      </div> -->
-    
-          <div class="container-contact100">
-            <div class="wrap-contact100">
-    
-              <div class="contact100-form-title" style="background-image: url(../static/images/bg.jpg);">
-                <span>Boolean Oracle</span>
-              </div>
-    
-                    <form class="contact100-form needs-validation" id = "upload_facts" method = "POST" novalidate>
-                      <div class="wrap-input100 form-group">
-                          <label class="exampleFormControlTextarea1">Facts</label>
-                          <textarea class="form-control" name="insert_facts" rows="3" required></textarea>
-                          <div class="invalid-feedback">
-                              Facts cannot be empty
-                          </div>
-                      </div>
-    
-                <div class="wrap-input100 form-group">
-                  <label class="exampleFormControlTextarea1">Enter questions</label>
-                  <textarea class="form-control" name="insert_questions" rows="3" required></textarea>
-                  <div class="invalid-feedback">
-                    Please enter atleast one question
-                  </div>
+    <div id="loading"><img src="../static/images/loader.gif"></img></div>
+    <section id="banner">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <p class="promo-title">Domain Specific Program Synthesis</p>
+                    <div class="about-section">
+                        <p class="promo-section">
+                            This tool uses Natural Language Processing and Machine Learning
+                            techniques to solve a propositional logic word problem.
+                            It takes facts and questions as input, and determines the results.
+                        <p>
+                            For eg. ,
+                            Facts: If it rains today, I will take an umbrella. <br>
+                              I did not take an umbrella today. <br>
+                            Question: Did it rain today? <br>
+                            Result: Did it rain? False. <br>
+                        </p>
+                        <p>
+                            The tool is also capable of handling 'Wh' questions:
+                            Who, Where, and What <br>
+                        </p>
+                        <p>
+                            E.g.
+                            Facts: If John and Susan go to school, Jack will go home.
+                              Susan went to school and Jack did not go home. <br>
+                            Question: Did John go to school? Who went to school? <br>
+                            Result: Did John go to school? False<br>
+                              Who went to school? Susan
+                        </p>
+                        <p>
+                            <b>
+                                Check out the tool to get started!
+                            </b>
+                        </p>
+                    </div>
                 </div>
-    
-                      <input class = "contact100-form-btn" type = "submit" name = "Solve" value = "Solve" onclick="loading();">
-                  </form>
-            </div>
-          </div>
-        </div>
-</div>
 
+                <div class="col-md-6 text-center">
+                    <div class="myform-container">
+                        <div class="myform-title" style="background-image: url('../static/images/bg.jpg');">
+                          <span>Domain Specific Program Synthesis</span>
+                        </div>
+                        <form class="myform needs-validation" id = "upload_facts" method = "POST" novalidate>
+                            <div class="myinput form-group">
+                                <label>Facts</label>
+                                <textarea class="form-control" name="insert_facts" rows="4" required></textarea>
+                                <div class="invalid-feedback">
+                                    Facts cannot be empty
+                                </div>
+                            </div>
+
+                            <div class="myinput form-group">
+                                <label>Enter questions</label>
+                                <textarea class="form-control" name="insert_questions" rows="4" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please enter atleast one question
+                                </div>
+                            </div>
+
+                            <input class = "myform-btn" type = "submit" name = "Solve" value = "Solve" onclick="loading();">
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </section>
 	<script>
 	(function() {
 	  'use strict';
@@ -142,12 +90,10 @@
 	  }, false);
 	})();
 	</script>
-  <script type="text/javascript">// <![CDATA[
+
+    <script type="text/javascript">
     function loading(){
-      document.getElementById("loading").style.display = "block";
-      // document.getElementById("content").style.display = "none";
-        // $("#loading").show();
-        // $("#content").hide();       
+        document.getElementById("loading").style.display = "block";
     }
-// ]]></script>
+    </script>
 {% endblock content %}
