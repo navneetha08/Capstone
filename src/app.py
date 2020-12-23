@@ -9,8 +9,8 @@ import time
 app = Flask(__name__)
 
 # Path to a Python interpreter under the venv
-#python_bin = "../modelvenv/bin/python"
-python_bin = "C:\\Users\\sparsha\\modelvenv\\Scripts\\python"
+python_bin = "../modelvenv/bin/python"
+# python_bin = "C:\\Users\\sparsha\\modelvenv\\Scripts\\python"
 
 # Path to the script that must run under the venv
 script_file = "restorefinalmodel.py"
@@ -64,7 +64,7 @@ def upload():
     print("EVAL", eval_input)
     result = finaleval.eval_main(eval_input)
 
-    # print(nlp_output , model_output , result)
+    print(nlp_output , model_output , result)
 
     # model_input = [['b - c'], ['c']]
     # model_output = [['b c  -> '], ['c']]
